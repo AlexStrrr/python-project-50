@@ -14,13 +14,13 @@ def gen_diff_json(file1, file2):
             result += f"- {k} {file1[k]}\n"
         if k in file2:
             result += f"+ {k} {file2[k]}\n"
-    print(result)
+    return result
 
 
 def generate_diff(file1, file2):
     f1 = json.load(open(file1))
     f2 = json.load(open(file2))
-    gen_diff_json(f1, f2)
+    tst = gen_diff_json(f1, f2)
+    print(tst)
+    return tst
 
-
-generate_diff('file1.json', 'file2.json')
