@@ -7,5 +7,3 @@ dist/
 poetry.lock
 
 __pycache__
-
-gendiff/scripts/__pycache__/gendiff.cpython-310.pyc
