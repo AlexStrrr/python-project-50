@@ -10,6 +10,11 @@ publish:
 package-install:
 	python3 -m pip install --user dist/*.whl
 
+all:
+	poetry build
+	poetry publish --dry-run
+	python3 -m pip install --user dist/*.whl
+
 uninstall:
 	python3 -m pip uninstall hexlet-code
 
