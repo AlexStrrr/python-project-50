@@ -32,4 +32,4 @@ test-coverage:
 
 
 check:
-    selfcheck test lint
+	selfcheck test lint
