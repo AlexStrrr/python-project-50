@@ -23,4 +23,3 @@ def generate_diff(file1, file2):
     tst = gen_diff_json(f1, f2)
     print(tst)
     return tst
-
