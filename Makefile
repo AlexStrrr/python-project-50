@@ -31,5 +31,8 @@ test-coverage:
 	poetry run pytest --cov=hexlet_python_package --cov-report xml
 
 
-check:
-	selfcheck test lint
+selfcheck:
+	poetry check
+
+
+check: selfcheck test lint
