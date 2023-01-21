@@ -1,11 +1,11 @@
 import json
-import yaml
+from yaml import safe_load
 
 
 def parser(filepath):
-    with open(filepath) as file:
+    with open(filepath) as f:
         if filepath.endswith('.yaml') or filepath.endswith('.yml'):
-            f = yaml.load(open(filepath))
+            f = safe_load(open(filepath))
         elif filepath.endswith('.json'):
             f = json.load(open(filepath))
     return f
