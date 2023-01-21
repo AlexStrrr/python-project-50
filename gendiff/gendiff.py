@@ -1,7 +1,7 @@
-import json
+from gendiff.parser import parser
 
 
-def gen_diff_json(file1, file2):
+def gen_diff_files(file1, file2):
     result = ''
     keys = list(file1.keys() | file2.keys())
     keys.sort()
@@ -18,8 +18,8 @@ def gen_diff_json(file1, file2):
 
 
 def generate_diff(file1, file2):
-    f1 = json.load(open(file1))
-    f2 = json.load(open(file2))
-    tst = gen_diff_json(f1, f2)
+    f1 = parser(file1)
+    f2 = parser(file2)
+    tst = gen_diff_files(f1, f2)
     print(tst)
     return tst
