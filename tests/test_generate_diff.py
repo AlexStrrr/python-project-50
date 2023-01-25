@@ -12,7 +12,7 @@ def test_gen_diff_json():
 
 
 def test_gen_diff_yaml():
-    result = generate_diff("tests/fixtures/filepath1.yml", "tests/fixtures/filepath2.yml")
+    result = generate_diff("tests/fixtures/file1.yml", "tests/fixtures/file2.yml")
     assert result == """- follow False
   host hexlet.io
 - proxy 123.234.53.22
