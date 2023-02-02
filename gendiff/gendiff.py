@@ -26,7 +26,7 @@ def make_diff(file1, file2):
         if key in file1.keys() and key in file2.keys():
             if file1[key] != file2[key]:
                 if isinstance(file1[key], dict) and isinstance(file2[key], dict):
-                    diff_dict[key] = {'type': 'internal_change',
+                    diff_dict[key] = {'type': 'changed',
                                       'value': make_diff(file1[key], file2[key])}
                 else:
                     diff_dict[key] = {'type': 'changed',
