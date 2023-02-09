@@ -39,25 +39,38 @@ NESTED = 'nested'
 INNER_UPDATED = 'inner_updated'
 
 
-def formatter_plain(diffdict: dict, key1=None) -> str:
-    result = ''
+SPACES = '  '
+PLUS = '+'
+MINUS = '-'
+
+
+def stylishformatter(diffdict: dict) -> str:
+
+    result = '{\n'
+
     for key in diffdict:
-        if diffdict[key]['type'] == UNCHANGED:
-            continue
-        if key1:
-            result += f"Property {key1}."
-        else:
-            result += f"{key}"
+
         if diffdict[key]['type'] == ADDED:
-            result += f" was added with value: {diffdict[key]['value']}\n"
+            if diffdict[key]['value'] and isinstance(diffdict[key]['value'], dict):
+                result += f"{SPACES}{PLUS} {key}:\n{SPACES}{diffdict[key]['value']}\n"
+            else:
+                result += f"{SPACES}{PLUS} {key}: {diffdict[key]['value']}\n"
+
         elif diffdict[key]['type'] == REMOVED:
-            result += f" was removed\n"
+            result += f"{SPACES}{MINUS} {key}: {diffdict[key]['value']}\n"
+
         elif diffdict[key]['type'] == UPDATED:
-            result += f" was updated. From {diffdict[key]['old_value']} to {diffdict[key]['new_value']}\n"
+            result += f"{SPACES}{MINUS} {key}: {diffdict[key]['old_value']}\n"\
+                      f"{SPACES}{PLUS} {key}: {diffdict[key]['new_value']}\n"
+
         elif diffdict[key]['type'] == INNER_UPDATED:
             if diffdict[key]['value'] and isinstance(diffdict[key]['value'], dict):
-                result += f"{formatter_plain(diffdict[key]['value'], key1=key)}"
-    return result
+                result += f"{SPACES * 2} {key}: {stylishformatter(diffdict[key]['value'])}\n"
+
+        else:
+            result += f"{SPACES * 2}{key}: {diffdict[key]['value']}\n"
+
+    return result + '}'
 
 
-print(formatter_plain(dictt))
+print(stylishformatter(dictt))
