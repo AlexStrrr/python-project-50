@@ -1,5 +1,4 @@
 from parser import parser
-import pprint
 
 
 ADDED = 'added'
@@ -41,14 +40,10 @@ def make_diff(file1, file2):
             diff_dict[key] = {'type': ADDED,
                               'value': file2[key]}
 
-    pprint.pprint(diff_dict)
     return diff_dict
 
 
-def generate_diff(file1, file2):
+def generate_diff(file1, file2, formatter='stylish'):
     f1 = parser(file1)
     f2 = parser(file2)
     return make_diff(f1, f2)
-
-
-generate_diff("../tests/fixtures/file3.json", "../tests/fixtures/file4.json")

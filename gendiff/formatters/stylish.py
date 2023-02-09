@@ -72,5 +72,3 @@ def stylishformatter(diffdict: dict) -> str:
 
     return result + '}'
 
-
-print(stylishformatter(dictt))
