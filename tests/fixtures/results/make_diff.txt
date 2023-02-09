@@ -1,0 +1,5 @@
+{'follow': {'type': 'deleted', 'value': False},
+ 'host': {'type': 'unchanged', 'value': 'hexlet.io'},
+ 'proxy': {'type': 'deleted', 'value': '123.234.53.22'},
+ 'timeout': {'new_value': 20, 'old_value': 50, 'type': 'changed'},
+ 'verbose': {'type': 'added', 'value': True}}
