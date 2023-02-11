@@ -31,59 +31,58 @@ dictt = {'common': {'type': 'inner_updated',
             'value': {'deep': {'id': {'number': 45}}, 'fee': 100500}}}
 
 
+from gendiff.run.gendiff import ADDED, REMOVED, UNCHANGED, UPDATED, INNER_UPDATED
 import json
 
 
-ADDED = 'added'
-REMOVED = 'removed'
-UNCHANGED = 'unchanged'
-UPDATED = 'updated'
-NESTED = 'nested'
-INNER_UPDATED = 'inner_updated'
-
-
-SPACE = '  '
+SPACE = ' '
 PLUS = '+'
 MINUS = '-'
 
 
-def stylish_format(diffdict: dict) -> str:
+def stylish_format(diff_dict: dict, level=2) -> str:
 
     result = '{\n'
-    level = 3
 
-    for key in diffdict:
+    for key in diff_dict:
 
-        if diffdict[key]['type'] == ADDED:
-            if diffdict[key]['value'] and isinstance(diffdict[key]['value'], dict):
-                val = json.dumps(diffdict[key]['value'], indent=4)
-                result += f"{SPACE * level}{PLUS} {key}'0': {val}\n".replace('"', '')
+        if diff_dict[key]['type'] == ADDED:
+            if diff_dict[key]['value'] and isinstance(diff_dict[key]['value'], dict):
+                val = json.dumps(diff_dict[key]['value'], indent=4)
+                result += f"{SPACE * level}{PLUS} {key}: {val}\n".replace('"', '')
             else:
-                result += f"{SPACE * level}{PLUS} {key}'1': {diffdict[key]['value']}\n"
+                result += f"{SPACE * level}{PLUS} {key}: {diff_dict[key]['value']}\n"
 
-        elif diffdict[key]['type'] == REMOVED:
-            if diffdict[key]['value'] and isinstance(diffdict[key]['value'], dict):
-                val = json.dumps(diffdict[key]['value'], indent=4)
-                result += f"{SPACE * level}{MINUS} {key}'2': {val}\n".replace('"', '')
+        elif diff_dict[key]['type'] == REMOVED:
+            if diff_dict[key]['value'] and isinstance(diff_dict[key]['value'], dict):
+                val = json.dumps(diff_dict[key]['value'], indent=6 + level)
+                result += f"{SPACE * level}{MINUS} {key}: {val}\n".replace('"', '')
             else:
-                result += f"{SPACE}{MINUS} {key}'3': {diffdict[key]['value']}\n"
+                result += f"{SPACE * level}{MINUS} {key}: {diff_dict[key]['value']}\n"
 
-        elif diffdict[key]['type'] == UPDATED:
-            result += f"{SPACE * level}{MINUS} {key}'4': {diffdict[key]['old_value']}\n"\
-                      f"{SPACE * level}{PLUS} {key}'4.5': {diffdict[key]['new_value']}\n"
-
-        elif diffdict[key]['type'] == INNER_UPDATED:
-            if diffdict[key]['value'] and isinstance(diffdict[key]['value'], dict):
-                level -= 1
-                result += f"{SPACE * level} {key}'5': {stylish_format(diffdict[key]['value'])}\n"
-                level += 1
-
-        elif diffdict[key]['type'] == UNCHANGED:
-            if diffdict[key]['value'] and isinstance(diffdict[key]['value'], dict):
-                val = json.dumps(diffdict[key]['value'], indent=4)
-                result += f"{SPACE * level}{SPACE}{key}'6': {val}\n".replace('"', '')
+        elif diff_dict[key]['type'] == UPDATED:
+            if diff_dict[key]['old_value'] and isinstance(diff_dict[key]['old_value'], dict):
+                old_val = json.dumps(diff_dict[key]['old_value'], indent=6 + level)
+                result += f"{SPACE * level}{MINUS} {key}: {old_val}\n".replace('"', '')
             else:
-                result += f"{SPACE * level}{SPACE}{key}'7': {diffdict[key]['value']}\n"
+                result += f"{SPACE * level}{MINUS} {key}: {diff_dict[key]['old_value']}\n"
+
+            if diff_dict[key]['new_value'] and isinstance(diff_dict[key]['new_value'], dict):
+                new_val = json.dumps(diff_dict[key]['new_value'], indent=6 + level)
+                result += f"{SPACE * level}{MINUS} {key}: {new_val}\n".replace('"', '')
+            else:
+                result += f"{SPACE * level}{PLUS} {key}: {diff_dict[key]['new_value']}\n"
+
+        elif diff_dict[key]['type'] == INNER_UPDATED:
+            if diff_dict[key]['value'] and isinstance(diff_dict[key]['value'], dict):
+                result += f"{SPACE * level}{SPACE} {key}: {stylish_format(diff_dict[key]['value'], level + 4)}\n"
+
+        elif diff_dict[key]['type'] == UNCHANGED:
+            if diff_dict[key]['value'] and isinstance(diff_dict[key]['value'], dict):
+                val = json.dumps(diff_dict[key]['value'], indent=6 + level)
+                result += f"{SPACE * level}{SPACE} {key}: {val}\n".replace('"', '')
+            else:
+                result += f"{SPACE * level}{SPACE} {key}: {diff_dict[key]['value']}\n"
 
     return result + '}'
 
