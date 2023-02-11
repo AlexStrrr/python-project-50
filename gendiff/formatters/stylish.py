@@ -31,6 +31,9 @@ dictt = {'common': {'type': 'inner_updated',
             'value': {'deep': {'id': {'number': 45}}, 'fee': 100500}}}
 
 
+import json
+
+
 ADDED = 'added'
 REMOVED = 'removed'
 UNCHANGED = 'unchanged'
@@ -39,36 +42,51 @@ NESTED = 'nested'
 INNER_UPDATED = 'inner_updated'
 
 
-SPACES = '  '
+SPACE = '  '
 PLUS = '+'
 MINUS = '-'
 
 
-def stylishformatter(diffdict: dict) -> str:
+def stylish_format(diffdict: dict) -> str:
 
     result = '{\n'
+    level = 3
 
     for key in diffdict:
 
         if diffdict[key]['type'] == ADDED:
             if diffdict[key]['value'] and isinstance(diffdict[key]['value'], dict):
-                result += f"{SPACES}{PLUS} {key}:\n{SPACES}{diffdict[key]['value']}\n"
+                val = json.dumps(diffdict[key]['value'], indent=4)
+                result += f"{SPACE * level}{PLUS} {key}'0': {val}\n".replace('"', '')
             else:
-                result += f"{SPACES}{PLUS} {key}: {diffdict[key]['value']}\n"
+                result += f"{SPACE * level}{PLUS} {key}'1': {diffdict[key]['value']}\n"
 
         elif diffdict[key]['type'] == REMOVED:
-            result += f"{SPACES}{MINUS} {key}: {diffdict[key]['value']}\n"
+            if diffdict[key]['value'] and isinstance(diffdict[key]['value'], dict):
+                val = json.dumps(diffdict[key]['value'], indent=4)
+                result += f"{SPACE * level}{MINUS} {key}'2': {val}\n".replace('"', '')
+            else:
+                result += f"{SPACE}{MINUS} {key}'3': {diffdict[key]['value']}\n"
 
         elif diffdict[key]['type'] == UPDATED:
-            result += f"{SPACES}{MINUS} {key}: {diffdict[key]['old_value']}\n"\
-                      f"{SPACES}{PLUS} {key}: {diffdict[key]['new_value']}\n"
+            result += f"{SPACE * level}{MINUS} {key}'4': {diffdict[key]['old_value']}\n"\
+                      f"{SPACE * level}{PLUS} {key}'4.5': {diffdict[key]['new_value']}\n"
 
         elif diffdict[key]['type'] == INNER_UPDATED:
             if diffdict[key]['value'] and isinstance(diffdict[key]['value'], dict):
-                result += f"{SPACES * 2} {key}: {stylishformatter(diffdict[key]['value'])}\n"
+                level -= 1
+                result += f"{SPACE * level} {key}'5': {stylish_format(diffdict[key]['value'])}\n"
+                level += 1
 
-        else:
-            result += f"{SPACES * 2}{key}: {diffdict[key]['value']}\n"
+        elif diffdict[key]['type'] == UNCHANGED:
+            if diffdict[key]['value'] and isinstance(diffdict[key]['value'], dict):
+                val = json.dumps(diffdict[key]['value'], indent=4)
+                result += f"{SPACE * level}{SPACE}{key}'6': {val}\n".replace('"', '')
+            else:
+                result += f"{SPACE * level}{SPACE}{key}'7': {diffdict[key]['value']}\n"
 
     return result + '}'
+
+
+print(stylish_format(dictt))
 
