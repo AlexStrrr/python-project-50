@@ -1,46 +1,4 @@
-dictt = {'common': {'type': 'inner_updated',
-            'value': {'follow': {'type': 'added', 'value': False},
-                      'setting1': {'type': 'unchanged', 'value': 'Value 1'},
-                      'setting2': {'type': 'removed', 'value': 200},
-                      'setting3': {'new_value': None,
-                                   'old_value': True,
-                                   'type': 'updated'},
-                      'setting4': {'type': 'added', 'value': 'blah blah'},
-                      'setting5': {'type': 'added',
-                                   'value': {'key5': 'value5'}},
-                      'setting6': {'type': 'inner_updated',
-                                   'value': {'doge': {'type': 'inner_updated',
-                                                      'value': {'wow': {'new_value': 'so '
-                                                                                     'much',
-                                                                        'old_value': '',
-                                                                        'type': 'updated'}}},
-                                             'key': {'type': 'unchanged',
-                                                     'value': 'value'},
-                                             'ops': {'type': 'added',
-                                                     'value': 'vops'}}}}},
- 'group1': {'type': 'inner_updated',
-            'value': {'baz': {'new_value': 'bars',
-                              'old_value': 'bas',
-                              'type': 'updated'},
-                      'foo': {'type': 'unchanged', 'value': 'bar'},
-                      'nest': {'new_value': 'str',
-                               'old_value': {'key': 'value'},
-                               'type': 'updated'}}},
- 'group2': {'type': 'removed', 'value': {'abc': 12345, 'deep': {'id': 45}}},
- 'group3': {'type': 'added',
-            'value': {'deep': {'id': {'number': 45}}, 'fee': 100500}}}
-
-
-import itertools
-
-
-ADDED = 'added'
-REMOVED = 'removed'
-UNCHANGED = 'unchanged'
-UPDATED = 'updated'
-NESTED = 'nested'
-INNER_UPDATED = 'inner_updated'
-COMPLEX_VALUE = 'complex_value'
+from gendiff.run.gendiff import ADDED, REMOVED, UNCHANGED, UPDATED, INNER_UPDATED
 
 
 def get_val(value):
@@ -53,32 +11,25 @@ def get_val(value):
     return "'" + str(value) + "'"
 
 
-def plain_format(diffdict: dict, source='') -> str:
+def plain_format(diff_dict: dict, path=[]) -> str:
     result = ''
-    path = []
-    for key in diffdict:
-        # path = itertools.chain(path, str(key))
-        # path = list(path)
-        # path = ''.join(path)
+    for key in diff_dict:
         path.append(key)
-        if diffdict[key]['type'] == UNCHANGED:
+        if diff_dict[key]['type'] == UNCHANGED:
+            path.pop()
             continue
-        elif diffdict[key]['type'] == ADDED:
-            value = get_val(diffdict[key]['value'])
-            result += f"Property '{path}' was added with value: {value}\n"
-        elif diffdict[key]['type'] == REMOVED:
-            result += f"Property '{path}' was removed\n"
-        elif diffdict[key]['type'] == UPDATED:
-            old_value = get_val(diffdict[key]['old_value'])
-            new_value = get_val(diffdict[key]['new_value'])
-            result += f"Property '{path}' was updated. From {old_value}" \
+        elif diff_dict[key]['type'] == ADDED:
+            value = get_val(diff_dict[key]['value'])
+            result += f"Property '{'.'.join(path)}' was added with value: {value}\n"
+        elif diff_dict[key]['type'] == REMOVED:
+            result += f"Property '{'.'.join(path)}' was removed\n"
+        elif diff_dict[key]['type'] == UPDATED:
+            old_value = get_val(diff_dict[key]['old_value'])
+            new_value = get_val(diff_dict[key]['new_value'])
+            result += f"Property '{'.'.join(path)}' was updated. From {old_value}" \
                       f" to {new_value}\n"
-        elif diffdict[key]['type'] == INNER_UPDATED:
-            if diffdict[key]['value'] and isinstance(diffdict[key]['value'], dict):
-                path.append(key)
-                result += f"{plain_format(diffdict[key]['value'], source)}"
+        elif diff_dict[key]['type'] == INNER_UPDATED:
+            if diff_dict[key]['value'] and isinstance(diff_dict[key]['value'], dict):
+                result += f"{plain_format(diff_dict[key]['value'], path)}"
+        path.pop()
     return result
-
-
-print(plain_format(dictt))
-
