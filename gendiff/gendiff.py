@@ -1,5 +1,4 @@
 from parser import parser
-from formatters.plain import plain_formatter
 
 
 ADDED = 'added'
@@ -47,6 +46,5 @@ def make_diff(file1, file2):
 def generate_diff(file1, file2, formatter='stylish'):
     f1 = parser(file1)
     f2 = parser(file2)
-    format_style = plain_formatter(formatter)
     diff_dict = make_diff(f1, f2)
     return format_style(diff_dict)
