@@ -1,5 +1,5 @@
 import json
 
 
-def json_format(diffdict: dict):
-    return json.dumps(diffdict, indent=3, sort_keys=True)
+def json_format(diff_dict: dict):
+    return json.dumps(diff_dict, indent=3, sort_keys=True)
