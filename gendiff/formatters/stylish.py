@@ -88,4 +88,3 @@ def stylish_format(diff_dict: dict, level=2) -> str:
 
 
 print(stylish_format(dictt))
-
