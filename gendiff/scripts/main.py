@@ -2,7 +2,7 @@
 
 
 import argparse
-from gendiff.gendiff import generate_diff
+from gendiff.run.gendiff import generate_diff
 
 
 def cli():
@@ -17,9 +17,8 @@ def cli():
 
 
 def main():
-    first_file, second_file, format = cli()
-    generate_diff(first_file, second_file)
-    print(generate_diff(first_file, second_file, format))
+    first_file, second_file, format_name = cli()
+    generate_diff(first_file, second_file, format_name)
 
 
 if __name__ == '__main__':
