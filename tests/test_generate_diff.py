@@ -1,8 +1,8 @@
 import json
-
-from gendiff.gendiff import generate_diff
-from gendiff.gendiff import make_diff
-from gendiff.formatters.stylish import stylishformatter
+from gendiff.run.gendiff import generate_diff
+from gendiff.run.gendiff import make_diff
+from gendiff.formatters.stylish import stylish_format
+from gendiff.formatters.plain import plain_format
 
 
 def test_gen_diff_json():
@@ -24,11 +24,36 @@ def test_make_diff():
     assert result == open("tests/fixtures/results/make_diff.txt").read()
 
 
-def test_formatter_stylish():
+def test_stylish_format():
     with open("tests/fixtures/file3.json") as file3:
         dict3 = json.load(file3)
     with open("tests/fixtures/file4.json") as file4:
         dict4 = json.load(file4)
-    dict = make_diff(dict3, dict4)
-    result = stylishformatter(dict)
+    diffdict = make_diff(dict3, dict4)
+    result = stylish_format(diffdict)
     assert result == open("tests/fixtures/results/stylish.txt").read()
+
+
+def test_plain_format():
+    with open("tests/fixtures/file3.json") as file3:
+        dict3 = json.load(file3)
+    with open("tests/fixtures/file4.json") as file4:
+        dict4 = json.load(file4)
+    diff_dict = make_diff(dict3, dict4)
+    result = plain_format(diff_dict)
+    assert result == open("tests/fixtures/results/plain.txt").read()
+
+
+def is_json(data):
+    try:
+        json.loads(data)
+    except ValueError:
+        return False
+    return True
+
+
+def test_json():
+    result1 = generate_diff("tests/fixtures/file3.json", "tests/fixtures/file4.json", 'json')
+    result2 = generate_diff("tests/fixtures/file3.json", "tests/fixtures/file4.json")
+    assert is_json(result1) is True
+    assert is_json(result2) is False
