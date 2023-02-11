@@ -8,12 +8,12 @@ PLAIN = 'plain'
 JSON = 'json'
 
 
-def format_change(format_name):
+def format_change(diff_dict: dict, format_name: str):
     if format_name == STYLISH:
-        return stylish_format(diffdict)
+        return stylish_format(diff_dict)
     elif format_name == PLAIN:
-        return plain_format(diffdict)
+        return plain_format(diff_dict)
     elif format_name == JSON:
-        return json_format(diffdict)
+        return json_format(diff_dict)
     else:
         raise ValueError(f"{format_name} is not supported. Please use {STYLISH}, {PLAIN} or {JSON} format")
