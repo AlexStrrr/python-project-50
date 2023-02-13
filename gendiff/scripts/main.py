@@ -18,7 +18,7 @@ def cli():
 
 def main():
     first_file, second_file, format_name = cli()
-    generate_diff(first_file, second_file, format_name)
+    print(generate_diff(first_file, second_file, format_name))
 
 
 if __name__ == '__main__':
