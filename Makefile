@@ -11,6 +11,7 @@ package-install:
 	python3 -m pip install --user dist/*.whl
 
 all:
+	poetry update
 	poetry build
 	poetry publish --dry-run
 	python3 -m pip install --user dist/*.whl
@@ -30,4 +31,5 @@ test-coverage:
 selfcheck:
 	poetry check
 
-check: selfcheck test lint
+check:
+	selfcheck test lint
