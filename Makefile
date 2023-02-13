@@ -32,4 +32,6 @@ selfcheck:
 	poetry check
 
 check:
-	selfcheck test lint
+	poetry check
+	poetry run pytest
+	poetry run flake8 gendiff
