@@ -1,5 +1,6 @@
 from gendiff.formatters.stylish import bool_null
-from tests.fixtures.types import ADDED, REMOVED, UNCHANGED, UPDATED, INNER_UPDATED
+from tests.fixtures.types import ADDED,\
+    REMOVED, UNCHANGED, UPDATED, INNER_UPDATED
 
 
 def get_val(value):
@@ -25,7 +26,8 @@ def plain_format(diff_dict: dict, path=[]) -> str:
 
         elif diff_dict[key]['type'] == ADDED:
             value = get_val(diff_dict[key]['value'])
-            result += f"Property '{'.'.join(path)}' was added with value: {value}\n"
+            result += f"Property '{'.'.join(path)}' "\
+                      f"was added with value: {value}\n"
 
         elif diff_dict[key]['type'] == REMOVED:
             result += f"Property '{'.'.join(path)}' was removed\n"
@@ -33,11 +35,12 @@ def plain_format(diff_dict: dict, path=[]) -> str:
         elif diff_dict[key]['type'] == UPDATED:
             old_value = get_val(diff_dict[key]['old_value'])
             new_value = get_val(diff_dict[key]['new_value'])
-            result += f"Property '{'.'.join(path)}' was updated. From {old_value}" \
-                      f" to {new_value}\n"
+            result += f"Property '{'.'.join(path)}' "\
+                      f"was updated. From {old_value} to {new_value}\n"
 
         elif diff_dict[key]['type'] == INNER_UPDATED:
-            if diff_dict[key]['value'] and isinstance(diff_dict[key]['value'], dict):
+            if diff_dict[key]['value']\
+                    and isinstance(diff_dict[key]['value'], dict):
                 result += f"{plain_format(diff_dict[key]['value'], path)}"
 
         path.pop()

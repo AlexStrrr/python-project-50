@@ -1,6 +1,6 @@
+from gendiff.formatters.json_formatter import json_format
 from gendiff.formatters.stylish import stylish_format
 from gendiff.formatters.plain import plain_format
-from gendiff.formatters.json_formatter import json_format
 
 
 STYLISH = 'stylish'
@@ -16,4 +16,5 @@ def format_change(diff_dict: dict, format_name: str):
     elif format_name == JSON:
         return json_format(diff_dict)
     else:
-        raise ValueError(f"{format_name} is not supported. Please use {STYLISH}, {PLAIN} or {JSON} format")
+        raise ValueError(f"{format_name} is not supported. "
+                         f"Please use {STYLISH}, {PLAIN} or {JSON} format")
