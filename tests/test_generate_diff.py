@@ -1,47 +1,67 @@
 import json
 from gendiff.run.gendiff import generate_diff
 from gendiff.run.gendiff import make_diff
-from gendiff.formatters.stylish import stylish_format
-from gendiff.formatters.plain import plain_format
+from gendiff.run.parser import parser
+import pytest
 
 
-def test_gen_diff_json():
-    result = generate_diff("tests/fixtures/file1.json", "tests/fixtures/file2.json")
-    assert result == open("tests/fixtures/results/flat.txt").read()
+@pytest.mark.parametrize('data_file', ['tests/fixtures/file1.json',
+                                       'tests/fixtures/file1.yml',
+                                       'tests/fixtures/file1.yaml'])
+def test_parser(data_file):
+    dict_data = parser(open(data_file), data_file)
+    assert isinstance(dict_data, dict)
 
 
-def test_gen_diff_yaml():
-    result = generate_diff("tests/fixtures/file1.yml", "tests/fixtures/file2.yml")
-    assert result == open("tests/fixtures/results/flat.txt").read()
+@pytest.mark.parametrize('data_file1', 'data_file2', 'result_file',
+                         [('tests/fixtures/file1.json',
+                           'tests/fixtures/file2.json',
+                           'tests/fixtures/results/flat.txt'),
+                          ('tests/fixtures/file1.yml',
+                           'tests/fixtures/file2.yml',
+                           'tests/fixtures/results/flat.txt'),
+                          ('tests/fixtures/file1.yaml',
+                           'tests/fixtures/file2.yaml',
+                           'tests/fixtures/results/flat.txt')])
+def test_generate_diff_flat(data_file1, data_file2, result_file):
+    result = open(result_file, 'r').read()
+    assert generate_diff(data_file1, data_file2) == result
 
 
-def test_make_diff():
-    with open("tests/fixtures/file1.json") as file1:
-        dict1 = json.load(file1)
-    with open("tests/fixtures/file2.json") as file2:
-        dict2 = json.load(file2)
-    result = make_diff(dict1, dict2)
-    assert result == open("tests/fixtures/results/make_diff.txt").read()
+@pytest.mark.parametrize('data_file1', 'data_file2', 'result_file',
+                         [('tests/fixtures/file3.json',
+                           'tests/fixtures/file4.json',
+                           'tests/fixtures/results/stylish.txt'),
+                          ('tests/fixtures/file3.yaml',
+                           'tests/fixtures/file4.yaml',
+                           'tests/fixtures/results/stylish.txt')])
+def test_generate_diff_stylish(data_file1, data_file2, result_file):
+    result = open(result_file, 'r').read()
+    assert generate_diff(data_file1, data_file2) == result
 
 
-def test_stylish_format():
-    with open("tests/fixtures/file3.json") as file3:
-        dict3 = json.load(file3)
-    with open("tests/fixtures/file4.json") as file4:
-        dict4 = json.load(file4)
-    diffdict = make_diff(dict3, dict4)
-    result = stylish_format(diffdict)
-    assert result == open("tests/fixtures/results/stylish.txt").read()
+@pytest.mark.parametrize('data_file1', 'data_file2', 'result_file',
+                         [('tests/fixtures/file3.json',
+                           'tests/fixtures/file4.json',
+                           'tests/fixtures/results/plain.txt'),
+                          ('tests/fixtures/file3.yaml',
+                           'tests/fixtures/file4.yaml',
+                           'tests/fixtures/results/plain.txt')])
+def test_generate_diff_plain(data_file1, data_file2, result_file):
+    result = open(result_file, 'r').read()
+    assert generate_diff(data_file1, data_file2) == result
 
 
-def test_plain_format():
-    with open("tests/fixtures/file3.json") as file3:
-        dict3 = json.load(file3)
-    with open("tests/fixtures/file4.json") as file4:
-        dict4 = json.load(file4)
-    diff_dict = make_diff(dict3, dict4)
-    result = plain_format(diff_dict)
-    assert result == open("tests/fixtures/results/plain.txt").read()
+@pytest.mark.parametrize('data_file1', 'data_file2', 'result_file',
+                         [('tests/fixtures/file1.json',
+                           'tests/fixtures/file2.json',
+                           'tests/fixtures/results/make_diff.txt'),
+                          ('tests/fixtures/file1.yaml',
+                           'tests/fixtures/file2.yaml',
+                           'tests/fixtures/results/make_diff.txt')])
+def test_make_diff(data_file1, data_file2, result_file):
+    result = open(result_file, 'r').read()
+    assert make_diff(data_file1, data_file2) == result
 
 
 def is_json(data):
@@ -52,8 +72,13 @@ def is_json(data):
     return True
 
 
-def test_json():
-    result1 = generate_diff("tests/fixtures/file3.json", "tests/fixtures/file4.json", 'json')
-    result2 = generate_diff("tests/fixtures/file3.json", "tests/fixtures/file4.json")
+@pytest.mark.parametrize('data_file1, data_file2',
+                         [('tests/fixtures/file3.json',
+                           'tests/fixtures/file4.yaml'),
+                          ('tests/fixtures/file3.yaml',
+                           'tests/fixtures/file4.json')])
+def test_generate_diff_json(data_file1, data_file2):
+    result1 = generate_diff(data_file1, data_file2, 'json')
+    result2 = generate_diff(data_file1, data_file2)
     assert is_json(result1) is True
     assert is_json(result2) is False
