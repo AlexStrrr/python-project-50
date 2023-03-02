@@ -1,4 +1,4 @@
-## "Difference Generator" is the second learning project on [Hexlet.io]
+## "Difference Generator" is the second learning project on [Hexlet.io](https://ru.hexlet.io).
 ___
 
 ### Hexlet tests and linter status:
