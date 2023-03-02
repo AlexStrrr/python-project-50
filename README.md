@@ -19,13 +19,19 @@ You can use Difference Generator as CLI tool or external library.
 
 Download the repository to try:
 
+```bash
 git clone https://github.com/AlexStrrr/python-project-50.git
+```
 
+```bash
 make
+```
 
 You can get help about the utility using the command:
 
+```bash
 gendiff --help
+```
 
-Demonstration of the program:
+Demonstration:
 
