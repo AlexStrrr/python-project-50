@@ -53,5 +53,4 @@ options:
                         set format of output ("Plain" or "JSON" or default: "Stylish")
 ```
 
-### Demonstration:
-
+### Demonstra
