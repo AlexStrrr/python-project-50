@@ -5,6 +5,10 @@ description = ""
 authors = ["AlexStrrr <alex.hrtnv@gmail.com>"]
 readme = "README.md"
 packages = [{include = "gendiff"}]
+classifiers = [
+    "Programming Language :: Python :: 3.8",
+    "Topic :: Education"]
+repository = "https://github.com/AlexStrrr/python-project-50.git"
 
 [tool.poetry.dependencies]
 python = "^3.10"
