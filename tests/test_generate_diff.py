@@ -14,7 +14,8 @@ import pytest
                            'tests/fixtures/file2.yaml',
                            'tests/fixtures/results/flat.txt')])
 def test_generate_diff_flat(data_file1, data_file2, result_file):
-    result = open(result_file, 'r').read()
+    with open(result_file) as file:
+        result = file.read()
     assert generate_diff(data_file1, data_file2) == result
 
 
