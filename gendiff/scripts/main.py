@@ -5,7 +5,7 @@ import argparse
 from gendiff.run.gendiff import generate_diff
 
 
-def cli():
+def parse_arguments():
     parser = argparse.ArgumentParser(description='Generate diff')
     parser.add_argument('first_file', type=str)
     parser.add_argument('second_file', type=str)
@@ -17,7 +17,7 @@ def cli():
 
 
 def main():
-    first_file, second_file, format_name = cli()
+    first_file, second_file, format_name = parse_arguments()
     print(generate_diff(first_file, second_file, format_name))
 
 
