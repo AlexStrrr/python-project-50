@@ -10,9 +10,6 @@ publish:
 package-install:
 	python3 -m pip install --user dist/*.whl
 
-gendiff:
-	poetry run gendiff
-
 all:
 	poetry update
 	poetry build
