@@ -16,25 +16,25 @@ from gendiff.formatters.all_formatters import STYLISH, PLAIN, JSON
 def test_generate_diff_flat(data_file1, data_file2, result_file):
     with open(result_file) as file:
         result = file.read()
-    assert generate_diff(data_file1, data_file2) == result
+    assert result == generate_diff(data_file1, data_file2)
 
 
-@pytest.mark.parametrize('file1, file2, format, result_file',
+@pytest.mark.parametrize('file1, file2, report_format, result_file',
                          [('tests/fixtures/file3.json',
                            'tests/fixtures/file4.json',
-                           PLAIN
+                           PLAIN,
                            'tests/fixtures/results/plain.txt'),
                           ('tests/fixtures/file3.yaml',
                            'tests/fixtures/file4.yaml',
-                           PLAIN
+                           PLAIN,
                            'tests/fixtures/results/plain.txt'),
                           ('tests/fixtures/file3.json',
                            'tests/fixtures/file4.json',
-                           STYLISH
+                           STYLISH,
                            'tests/fixtures/results/stylish.txt'),
                           ('tests/fixtures/file3.yaml',
                            'tests/fixtures/file4.yaml',
-                           STYLISH
+                           STYLISH,
                            'tests/fixtures/results/stylish.txt')])
 def test_generate_diff(file1, file2, report_format, result_file):
     with open(result_file) as file:
