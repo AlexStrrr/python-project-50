@@ -6,8 +6,8 @@ from gendiff.formatters.plain import plain_format
 STYLISH = 'stylish'
 PLAIN = 'plain'
 JSON = 'json'
-DEFAULT_FORMAT = 'stylish'
-FORMATS = ('stylish', 'plain', 'json')
+DEFAULT_FORMAT = STYLISH
+FORMATS = (STYLISH, PLAIN, JSON)
 
 
 def format_change(diff_dict: dict, format_name: str):
