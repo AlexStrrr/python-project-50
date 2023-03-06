@@ -53,4 +53,9 @@ options:
                         set format of output ("Plain" or "JSON" or default: "Stylish")
 ```
 
-### Demonstra
+### я знаю, что дальше должны идти аскинемы с демонстрацией работы программы,
+### но они не хотят сохраняться, выдавая ошибку:
+### asciinema: upload failed: <urlopen error SSL: CERTIFICATE_VERIFY_FAILED] 
+### certificate verify failed: unable to get local issuer certificate (_ssl.c:997)>
+### найти решение этой проблемы самостоятельно я пока что не смогла, но может вы мне сможете подсказать? :)
+
