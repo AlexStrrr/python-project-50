@@ -14,7 +14,7 @@ all:
 	poetry update
 	poetry build
 	poetry publish --dry-run
-	python3 -m pip install --user dist/*.whl
+	python3 -m pip install --user --force-reinstall dist/*.whl
 
 uninstall:
 	python3 -m pip uninstall hexlet-code
