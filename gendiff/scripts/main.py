@@ -18,7 +18,7 @@ def parse_arguments():
                         default=DEFAULT_FORMAT)
 
     args = parser.parse_args()
-    return args
+    return args.first_file, args.second_file, args.format
 
 
 def main():
