@@ -3,24 +3,29 @@ from gendiff.run.gendiff import generate_diff
 import pytest
 from gendiff.formatters.all_formatters import STYLISH, PLAIN, JSON
 
-@pytest.mark.parametrize('data_file1, data_file2, result_file',
+
+@pytest.mark.parametrize('file1, file2, report_format, result_file',
                          [('tests/fixtures/file1.json',
                            'tests/fixtures/file2.json',
+                           JSON,
+                           'tests/fixtures/results/jsonflat.txt'),
+                          ('tests/fixtures/file1.yml',
+                           'tests/fixtures/file2.yml',
+                           JSON,
+                           'tests/fixtures/results/jsonflat.txt'),
+                           ('tests/fixtures/file1.json',
+                           'tests/fixtures/file2.json',
+                           STYLISH,
                            'tests/fixtures/results/flat.txt'),
                           ('tests/fixtures/file1.yml',
                            'tests/fixtures/file2.yml',
+                           STYLISH,
                            'tests/fixtures/results/flat.txt'),
                           ('tests/fixtures/file1.yaml',
                            'tests/fixtures/file2.yaml',
-                           'tests/fixtures/results/flat.txt')])
-def test_generate_diff_flat(data_file1, data_file2, result_file):
-    with open(result_file) as file:
-        result = file.read()
-    assert result == generate_diff(data_file1, data_file2)
-
-
-@pytest.mark.parametrize('file1, file2, report_format, result_file',
-                         [('tests/fixtures/file3.json',
+                           STYLISH,
+                           'tests/fixtures/results/flat.txt'),
+                          ('tests/fixtures/file3.json',
                            'tests/fixtures/file4.json',
                            PLAIN,
                            'tests/fixtures/results/plain.txt'),
