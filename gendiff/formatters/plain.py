@@ -1,4 +1,4 @@
-from code.formatters.stylish import bool_null
+from gendiff.formatters.stylish import bool_null
 from tests.fixtures.types import ADDED,\
     REMOVED, UNCHANGED, UPDATED, INNER_UPDATED
 

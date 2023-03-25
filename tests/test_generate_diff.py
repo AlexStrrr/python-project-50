@@ -1,7 +1,7 @@
 import json
-from code.gendiff import generate_diff
+from gendiff.gendiff import generate_diff
 import pytest
-from code.formatters.all_formatters import STYLISH, PLAIN, JSON
+from gendiff.formatters.all_formatters import STYLISH, PLAIN, JSON
 
 
 @pytest.mark.parametrize('file1, file2, report_format, result_file',

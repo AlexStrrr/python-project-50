@@ -2,8 +2,8 @@
 
 
 import argparse
-from code.gendiff import generate_diff
-from code.formatters.all_formatters import DEFAULT_FORMAT, FORMATS
+from gendiff.gendiff import generate_diff
+from gendiff.formatters.all_formatters import DEFAULT_FORMAT, FORMATS
 
 
 def parse_arguments():

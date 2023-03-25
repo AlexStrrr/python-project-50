@@ -35,11 +35,11 @@ make
 You can get help about the utility using the command:
 
 ```bash
-poetry run code --help
+poetry run gendiff --help
 ```
 
 ```bash
-usage: code [-h] [-f FORMAT] first_file second_file
+usage: gendiff [-h] [-f FORMAT] first_file second_file
 
 Generate diff
 
