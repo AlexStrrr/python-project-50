@@ -1,31 +1,22 @@
 import json
 from yaml import safe_load
 
-import requests
-
 
 def file_reader(file):
     with open(file) as f:
         data = f.read()
-    if file.endswitch('.yaml'):
+    if file.endswith('.yaml') or file.endswith('.yml'):
         data_format = 'yaml'
-    elif file.endswitch('yml'):
-        data_format = 'yml'
-    elif file.endswitch('json'):
+    elif file.endswith('json'):
         data_format = 'json'
     else:
         raise ValueError('File format is not supported. Please use YAML, YML or JSON format')
-    return data and data_format
+    return data, data_format
 
 
 def parser(data, data_format):
-    if data_format == 'yaml' or data_format == 'yml':
+    if data_format == 'yaml':
         f = safe_load(data)
     elif data_format == 'json':
-        f = json.load(data)
+        f = json.loads(data)
     return f
-
-
-# json_data = requests.get("https://something.com/json-data").text
-# parsed_data = parser(json_data, 'json')
-# print(parsed_data)
