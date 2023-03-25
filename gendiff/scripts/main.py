@@ -2,7 +2,7 @@
 
 
 import argparse
-from gendiff.run.gendiff import generate_diff
+from gendiff.gendiff import generate_diff
 from gendiff.formatters.all_formatters import DEFAULT_FORMAT, FORMATS
 
 
