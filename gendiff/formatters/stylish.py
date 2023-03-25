@@ -52,6 +52,7 @@ def stylish_format(diff_dict: dict, level=2) -> str:
                                   diff_dict[key]['value'], level)
 
         elif diff_dict[key].get('type') == UPDATED:
+
             if diff_dict[key]['old_value']\
                     and isinstance(diff_dict[key]['old_value'], dict):
                 old_val = stylish_format(diff_dict[key]['old_value'], level + 4)
@@ -71,6 +72,7 @@ def stylish_format(diff_dict: dict, level=2) -> str:
                           f"{bool_null(diff_dict[key]['new_value'])}\n"
 
         elif diff_dict[key].get('type') == INNER_UPDATED:
+
             if diff_dict[key]['value'] \
                     and isinstance(diff_dict[key]['value'], dict):
                 result += f"{SPACE * level}{SPACE} {key}: "\
