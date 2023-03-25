@@ -65,7 +65,7 @@ def stylish_format(diff_dict: dict, level=2) -> str:
             if diff_dict[key]['new_value']\
                     and isinstance(diff_dict[key]['new_value'], dict):
                 new_val = stylish_format(diff_dict[key]['new_value'], level + 4)
-                result += f"{SPACE * level}{MINUS} {key}: "\
+                result += f"{SPACE * level}{PLUS} {key}: "\
                           f"{bool_null(new_val)}\n".replace('"', '')
             else:
                 result += f"{SPACE * level}{PLUS} {key}: "\
