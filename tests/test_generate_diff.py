@@ -1,5 +1,5 @@
 import json
-from gendiff.generate_diff import generate_diff
+from gendiff.gendiff import generate_diff
 import pytest
 from gendiff.formatters.all_formatters import STYLISH, PLAIN, JSON
 
