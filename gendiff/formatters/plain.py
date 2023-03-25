@@ -10,7 +10,7 @@ def get_val(value):
 
     elif isinstance(value, dict):
         return "[complex value]"
-    
+
     elif isinstance(value, int):
         return str(value)
 
@@ -42,9 +42,9 @@ def plain_format(diff_dict: dict, path=[]) -> str:
                       f"was updated. From {old_value} to {new_value}\n"
 
         elif diff_dict[key]['type'] == INNER_UPDATED:
-            if diff_dict[key]['value']\
-                    and isinstance(diff_dict[key]['value'], dict):
-                result += f"{plain_format(diff_dict[key]['value'], path)}"
+            # if diff_dict[key]['value']\
+            #         and isinstance(diff_dict[key]['value'], dict):
+            result += f"{plain_format(diff_dict[key]['value'], path)}"
 
         path.pop()
 

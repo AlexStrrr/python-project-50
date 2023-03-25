@@ -10,7 +10,8 @@ def file_reader(file):
     elif file.endswith('json'):
         data_format = 'json'
     else:
-        raise ValueError('File format is not supported. Please use YAML, YML or JSON format')
+        raise ValueError('File format is not supported. '
+                         'Please use YAML, YML or JSON format')
     return data, data_format
 
 

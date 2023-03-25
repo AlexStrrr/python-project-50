@@ -27,14 +27,14 @@ def make_diff(f1, f2):
                               'value': f2[key]}
 
         elif f1[key] == f2[key]:
-                diff_dict[key] = {'type': UNCHANGED,
-                                  'value': f1[key]}
+            diff_dict[key] = {'type': UNCHANGED,
+                              'value': f1[key]}
 
         elif isinstance(f1[key], dict)\
-                    and isinstance(f2[key], dict):
-                diff_dict[key] = {'type': INNER_UPDATED,
-                                  'value': make_diff(f1[key],
-                                                     f2[key])}
+                and isinstance(f2[key], dict):
+            diff_dict[key] = {'type': INNER_UPDATED,
+                              'value': make_diff(f1[key],
+                                                 f2[key])}
 
         else:
             diff_dict[key] = {'type': UPDATED,
