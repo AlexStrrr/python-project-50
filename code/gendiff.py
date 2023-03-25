@@ -1,5 +1,5 @@
-from gendiff.parser import parser, file_reader
-from gendiff.formatters.all_formatters import format_change
+from code.parser import parser, file_reader
+from code.formatters.all_formatters import format_change
 
 
 ADDED = 'added'
