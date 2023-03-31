@@ -37,8 +37,6 @@ def get_stylish(key, type, value, level):
 
 def stylish_f(diff_dict: dict, level=2) -> str:
 
-    print(diff_dict)
-
     result = '{\n'
 
     for key in diff_dict:
@@ -73,14 +71,14 @@ def stylish_f(diff_dict: dict, level=2) -> str:
                 result += f"{SPACE * level}{PLUS} {key}: "\
                           f"{bool_null(diff_dict[key]['new_value'])}\n"
 
-        elif diff_dict[key].get('type') == INNER_UPDATED and diff_dict[key]['value'] \
-                and isinstance(diff_dict[key]['value'], dict):
-            result += f"{SPACE * level}{SPACE} {key}: "\
-                      f"{stylish_f(diff_dict[key]['value'], level + 4)}\n"
+        elif diff_dict[key].get('type') == INNER_UPDATED:
 
-        elif diff_dict[key].get('type') == INNER_UPDATED and diff_dict[key]['value'] \
-                and not isinstance(diff_dict[key]['value'], dict):
-            result += f"{SPACE * level}{SPACE} {key}: "\
+            if diff_dict[key]['value'] \
+                    and isinstance(diff_dict[key]['value'], dict):
+                result += f"{SPACE * level}{SPACE} {key}: "\
+                          f"{stylish_f(diff_dict[key]['value'], level + 4)}\n"
+            else:
+                result += f"{SPACE * level}{SPACE} {key}: "\
                           f"{bool_null(diff_dict[key]['value'])}\n"
 
         else:
