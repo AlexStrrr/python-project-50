@@ -26,7 +26,7 @@ def get_stylish(key, type, value, level):
     if type in ddict:
 
         if isinstance(value, dict):
-            val = stylish_format(value, level + 4)
+            val = stylish_f(value, level + 4)
 
         else:
             val = value
@@ -35,7 +35,9 @@ def get_stylish(key, type, value, level):
                f"{bool_null(val)}\n".replace('"', '')
 
 
-def stylish_format(diff_dict: dict, level=2) -> str:
+def stylish_f(diff_dict: dict, level=2) -> str:
+
+    print(diff_dict)
 
     result = '{\n'
 
@@ -55,7 +57,7 @@ def stylish_format(diff_dict: dict, level=2) -> str:
 
             if diff_dict[key]['old_value']\
                     and isinstance(diff_dict[key]['old_value'], dict):
-                old_val = stylish_format(diff_dict[key]['old_value'], level + 4)
+                old_val = stylish_f(diff_dict[key]['old_value'], level + 4)
                 result += f"{SPACE * level}{MINUS} {key}: "\
                           f"{bool_null(old_val)}\n".replace('"', '')
             else:
@@ -64,25 +66,26 @@ def stylish_format(diff_dict: dict, level=2) -> str:
 
             if diff_dict[key]['new_value']\
                     and isinstance(diff_dict[key]['new_value'], dict):
-                new_val = stylish_format(diff_dict[key]['new_value'], level + 4)
+                new_val = stylish_f(diff_dict[key]['new_value'], level + 4)
                 result += f"{SPACE * level}{PLUS} {key}: "\
                           f"{bool_null(new_val)}\n".replace('"', '')
             else:
                 result += f"{SPACE * level}{PLUS} {key}: "\
                           f"{bool_null(diff_dict[key]['new_value'])}\n"
 
-        elif diff_dict[key].get('type') == INNER_UPDATED:
+        elif diff_dict[key].get('type') == INNER_UPDATED and diff_dict[key]['value'] \
+                and isinstance(diff_dict[key]['value'], dict):
+            result += f"{SPACE * level}{SPACE} {key}: "\
+                      f"{stylish_f(diff_dict[key]['value'], level + 4)}\n"
 
-            if diff_dict[key]['value'] \
-                    and isinstance(diff_dict[key]['value'], dict):
-                result += f"{SPACE * level}{SPACE} {key}: "\
-                          f"{stylish_format(diff_dict[key]['value'], level + 4)}\n"
-            else:
-                result += f"{SPACE * level}{SPACE} {key}: "\
+        elif diff_dict[key].get('type') == INNER_UPDATED and diff_dict[key]['value'] \
+                and not isinstance(diff_dict[key]['value'], dict):
+            result += f"{SPACE * level}{SPACE} {key}: "\
                           f"{bool_null(diff_dict[key]['value'])}\n"
 
         else:
             result += f"{SPACE * level}{SPACE} {key}: "\
-                      f"{stylish_format(diff_dict[key], level + 4)}\n".replace('"', '')
+                      f"{stylish_f(diff_dict[key], level + 4)}\n".\
+                      replace('"', '')
 
     return result + ((level - 2) * ' ') + '}'
