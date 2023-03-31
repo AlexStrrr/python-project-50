@@ -53,8 +53,8 @@ options:
                         set format of output ("Plain" or "JSON" or default: "Stylish")
 ```
 
-# дальше должны идти аскинемы, но я застряла на них из-за такой ошибки:
-# asciinema: upload failed: <urlopen error SSL: CERTIFICATE_VERIFY_FAILED] 
-# certificate verify failed: unable to get local issuer certificate (_ssl.c:997)>
-# решить эту проблему самостоятельно я пока не смогла и мне никто не смог помочь, поэтому я решила
-# отправить на проверку то, что есть. И может быть вы сможете мне помочь с этим?..
+### дальше должны идти аскинемы, но я застряла на них из-за такой ошибки:
+### asciinema: upload failed: <urlopen error SSL: CERTIFICATE_VERIFY_FAILED] 
+### certificate verify failed: unable to get local issuer certificate (_ssl.c:997)>
+### решить эту проблему самостоятельно я пока не смогла и мне никто не смог помочь, поэтому я решила
+### отправить на проверку то, что есть. И может быть вы сможете мне помочь с этим?..
